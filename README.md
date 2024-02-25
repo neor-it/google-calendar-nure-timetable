@@ -30,7 +30,7 @@ python main.py
 2. Enter group (e.g. `КІУКІ-22-2`, `КІУКІ 22 2`, `кіукі 22 2`)
 3. Enter the months for which you want to save the schedule in Google Calendar (e.g. `9 10 11 12` or `September October November December`. Enter `all` to save the entire schedule). 
 
-**⚠️ ATTENTION!** The script will not delete events from the calendar, and will only add new ones. 
+**⚠️ ATTENTION!** In current version the script will not delete events from the calendar, and will only add new ones. 
 If you want to update the schedule, you need to delete the old events manually and run the script again.
 
 ## Contact
