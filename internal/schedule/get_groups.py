@@ -16,7 +16,6 @@ class Groups:
 
     @staticmethod
     def __extract_groups(direction):
-        """Extracts groups from a given direction or specialty."""
         groups = {}
 
         # Try to extract groups from 'groups' key
@@ -24,14 +23,15 @@ class Groups:
         if group_list is not None:
             for group in group_list:
                 groups[group['name']] = group['id']
+            return groups
 
         # If 'groups' key is not present, try to extract from 'specialities' key
-        else:
-            for specialty in direction['specialities']:
-                for group in specialty['groups']:
-                    groups[group['name']] = group['id']
+        for specialty in direction['specialities']:
+            for group in specialty['groups']:
+                groups[group['name']] = group['id']
 
         return groups
+
     @staticmethod
     def __get_groups_json():
         """Fetches and returns the JSON data from the API."""
