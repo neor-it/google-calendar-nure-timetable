@@ -96,12 +96,15 @@ class Schedule:
             if first_day.weekday() != 6:
                 first_day -= timedelta(days=(first_day.weekday() + 1))
 
-            start_day = first_day
-            while start_day <= last_day:
-                week = [start_day + timedelta(days=i) for i in range(7)]
+            # Calculate the number of weeks in the month
+            num_weeks = (last_day - first_day).days // 7 + 1
+
+            for i in range(num_weeks):
+                start_day = first_day + timedelta(days=i * 7)
+                week = [start_day + timedelta(days=j) for j in range(7)]
                 if week not in weeks:
                     weeks.append(week)
-                start_day += timedelta(days=7)
+
         return weeks
 
     def __get_group_id(self, group_name):
