@@ -31,7 +31,7 @@ python main.py
 2. Enter group (e.g. `КІУКІ-22-2`, `КІУКІ 22 2`, `кіукі 22 2`)
 3. Enter the months for which you want to save the schedule in Google Calendar (e.g. `9 10 11 12` or `September October November December`. Enter `all` to save the entire schedule).
 
-**⚠️ ATTENTION!** In current version the script will delete all events from the calendar (only for the calendar you created).
+**⚠️ ATTENTION!** In current version the script will delete all events from the calendar (only for the calendar you've created).
 Your other calendars won't be affected.
 
 ## Contact

@@ -67,17 +67,8 @@ class GoogleCalendar:
     def clear_calendar_events(self):
         """
         Deletes all events from the calendar.
-
-        Returns True on success, False otherwise.
         """
-        try:
-            events = self.service.events().list(calendarId=self.calendar).execute()
+        events = self.service.events().list(calendarId=self.calendar).execute()
 
-            for event in events.get('items', []):
-                event_id = event['id']
-                self.service.events().delete(calendarId=self.calendar, eventId=event_id).execute()
-            return True
-
-        except Exception as e:
-            print(f"An error occurred while clearing calendar events: {e}")
-            return False
+        for event in events['items']:
+            self.service.events().delete(calendarId=self.calendar, eventId=event['id']).execute()

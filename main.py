@@ -14,49 +14,51 @@ def main():
 
     action = input(f'{Fore.LIGHTCYAN_EX}Choose action:\n1 - For adding schedule. \n2 - For clearing schedule. ')
 
+    if not action.isnumeric():
+        print(f'{Fore.RED}{action} is not a valid input.')
+        exit()
+
     if action == '2':
         print(f'{Fore.GREEN}Please wait until schedule is cleared...')
         calendar.clear_calendar_events()
         print(f'{Fore.LIGHTGREEN_EX}Schedule successfully cleared!')
 
-    else:
-        group = input(f'{Fore.LIGHTCYAN_EX}Enter group (e.g. "КІУКІ-22-2, кіукі 22 2, etc"): ')
-        months = input(f'{Fore.CYAN}Enter the months for which you want to save the schedule in Google Calendar \n'
-                       f'(e.g. "9 10 11 12" or "September October November December". '
-                       'Enter "all" to save the entire schedule): ')
-        months = get_months(months)
+        exit()
 
-        month_names = {v: k.capitalize() for k, v in MONTH_NUMBERS.items()}
-        month_names_list = [month_names[month] for month in months]
-        month_names_str = ', '.join(month_names_list)
+    group = input(f'{Fore.LIGHTCYAN_EX}Enter group (e.g. "КІУКІ-22-2, кіукі 22 2, etc"): ')
+    months = input(f'{Fore.CYAN}Enter the months for which you want to save the schedule in Google Calendar \n'
+                   f'(e.g. "9 10 11 12" or "September October November December". '
+                   'Enter "all" to save the entire schedule): ')
+    months = get_months(months)
 
-        print(f"{Fore.LIGHTYELLOW_EX}Please wait while the schedule for the group '{group}' "
-              f"for the months {month_names_str} is being parsed and added to the Google Calendar...")
+    month_names = {v: k.capitalize() for k, v in MONTH_NUMBERS.items()}
+    month_names_list = [month_names[month] for month in months]
+    month_names_str = ', '.join(month_names_list)
 
-        schedule_instance = Schedule(group, months)
-        schedule = schedule_instance.get_schedule()
+    print(f"{Fore.LIGHTYELLOW_EX}Please wait while the schedule for the group '{group}' "
+          f"for the months {month_names_str} is being parsed and added to the Google Calendar...")
 
-        if len(schedule) == 0:
-            raise ValueError('No schedule found for the specified group and months')
+    schedule_instance = Schedule(group, months)
+    schedule = schedule_instance.get_schedule()
 
-        print(f"{Fore.YELLOW}Schedule for the group '{group}' for the months {month_names_str} "
-              "has been successfully parsed!\nSaving the schedule to the Google Calendar...")
+    if len(schedule) == 0:
+        raise ValueError('No schedule found for the specified group and months')
 
-        # clearing schedule to avoid conflicts:
-        calendar.clear_calendar_events()
+    print(f"{Fore.YELLOW}Schedule for the group '{group}' for the months {month_names_str} "
+          "has been successfully parsed!\nSaving the schedule to the Google Calendar...")
 
-        for item in schedule:
-            start, end = get_event_time(item)
+    for item in schedule:
+        start, end = get_event_time(item)
 
-            calendar.add_event_to_calendar(f"{item['subject']} ({item['type']})",
-                                           f"Auditorium: {item['auditorium']}",
-                                           start,
-                                           end
-                                           )
-            print(f"{Fore.GREEN}Event '{item['subject']} ({item['type']})' added to the calendar successfully!\n"
-                  f"Start: {start}\nEnd: {end}\n")
+        calendar.add_event_to_calendar(f"{item['subject']} ({item['type']})",
+                                       f"Auditorium: {item['auditorium']}",
+                                       start,
+                                       end
+                                       )
+        print(f"{Fore.GREEN}Event '{item['subject']} ({item['type']})' added to the calendar successfully!\n"
+              f"Start: {start}\nEnd: {end}\n")
 
-        print(f"{Fore.LIGHTGREEN_EX}Schedule successfully added to the Google Calendar!")
+    print(f"{Fore.LIGHTGREEN_EX}Schedule successfully added to the Google Calendar!")
 
 
 if __name__ == '__main__':
