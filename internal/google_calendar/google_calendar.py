@@ -63,3 +63,12 @@ class GoogleCalendar:
                 ],
             },
         }
+
+    def clear_calendar_events(self):
+        """
+        Deletes all events from the calendar.
+        """
+        events = self.service.events().list(calendarId=self.calendar).execute()
+
+        for event in events['items']:
+            self.service.events().delete(calendarId=self.calendar, eventId=event['id']).execute()
