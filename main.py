@@ -12,9 +12,23 @@ init(autoreset=True)
 def main():
     calendar = GoogleCalendar()
 
+    action = input(f'{Fore.LIGHTCYAN_EX}Choose action:\n1 - For adding schedule. \n2 - For clearing schedule. ')
+
+    if not action.isnumeric():
+        print(f'{Fore.RED}{action} is not a valid input.')
+        exit()
+
+    if action == '2':
+        print(f'{Fore.GREEN}Please wait until schedule is cleared...')
+        calendar.clear_calendar_events()
+        print(f'{Fore.LIGHTGREEN_EX}Schedule successfully cleared!')
+
+        exit()
+
     group = input(f'{Fore.LIGHTCYAN_EX}Enter group (e.g. "КІУКІ-22-2, кіукі 22 2, etc"): ')
-    months = input(f'{Fore.CYAN}Enter the months for which you want to save the schedule in Google Calendar (e.g. '
-                   '"9 10 11 12" or "September October November December". Enter "all" to save the entire schedule): ')
+    months = input(f'{Fore.CYAN}Enter the months for which you want to save the schedule in Google Calendar \n'
+                   f'(e.g. "9 10 11 12" or "September October November December". '
+                   'Enter "all" to save the entire schedule): ')
     months = get_months(months)
 
     month_names = {v: k.capitalize() for k, v in MONTH_NUMBERS.items()}
@@ -22,7 +36,7 @@ def main():
     month_names_str = ', '.join(month_names_list)
 
     print(f"{Fore.LIGHTYELLOW_EX}Please wait while the schedule for the group '{group}' "
-          "for the months {month_names_str} is being parsed and added to the Google Calendar...")
+          f"for the months {month_names_str} is being parsed and added to the Google Calendar...")
 
     schedule_instance = Schedule(group, months)
     schedule = schedule_instance.get_schedule()
